@@ -1,4 +1,7 @@
-function tuneSpark() {
+var output = document.getElementById("result");
+
+window.onload = function tuneSpark() {
+
     masterNodes = document.getElementById("masterNodes").value;
     executorNodes = document.getElementById("executorNodes").value;
     vCPUs = document.getElementById("vCPUs").value;
@@ -20,15 +23,15 @@ function tuneSpark() {
     executorInstances = (executorsperInstance * executorNodes) - 1
     defaultParallelism = executorInstances * cores * 2;
 
-    document.getElementById("result").innerHTML = "executor nodes" + executorNodes + "\n";
-    document.getElementById("cores").innerHTML = "spark.executor.cores:" + cores + "\n";
-    document.getElementById("memory").innerHTML = "spark.executor.memory:" + executorsperInstance + "\n";
-    document.getElementById("executorsMemory").innerHTML = "spark.executors.memory:" + sparkExecutorsMemory + "\n";
-    document.getElementById("memoryOverhead").innerHTML = "spark.yarn.executor.memoryOverhead:" + memoryOverhead + "\n";
+    document.getElementById("cores").innerHTML = "spark.executor.cores:" + cores;
+    document.getElementById("memory").innerHTML = "spark.executor.memory:" + executorsperInstance;
+    document.getElementById("executorsMemory").innerHTML = "spark.executors.memory:" + sparkExecutorsMemory;
+    document.getElementById("memoryOverhead").innerHTML = "spark.yarn.executor.memoryOverhead:" + memoryOverhead;
     //Equal to spark.executors.memory
-    document.getElementById("driverMemory").innerHTML = "spark.driver.memory:" + sparkExecutorsMemory + "\n";
+    document.getElementById("driverMemory").innerHTML = "spark.driver.memory:" + sparkExecutorsMemory;
     //Equal to executor cores
-    document.getElementById("driverCores").innerHTML = "spark.driver.cores:" + cores + "\n";
-    document.getElementById("executorInstances").innerHTML = "spark.executor.instances:" + cores + "\n";
-    document.getElementById("defaultParallelism").innerHTML = "spark.default.parallelism:" + defaultParallelism + "\n";
+    document.getElementById("driverCores").innerHTML = "spark.driver.cores:" + cores;
+    document.getElementById("executorInstances").innerHTML = "spark.executor.instances:" + cores;
+    document.getElementById("defaultParallelism").innerHTML = "spark.default.parallelism:" + defaultParallelism;
+
 }
