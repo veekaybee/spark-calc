@@ -29,26 +29,28 @@
 
   <!-- Begin page content -->
   <main role="main" class="container">
-    <h1 class="mt-5">Spark App Memory Calculator</h1>
+    <h1 class="mt-5"><img src="spark-logo.png" alt="..." width="50" height="50" class="rounded float-left" px-4
+        py-2>Spark App
+      Memory Calculator </h1>
     <p class="col-sm-10 lead bg-light text-dark">From <a
         href="https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/">this
         post on how to tune memory for Spark</a>, now in an interactive format.</p>
     <form id="myForm" class="form-inline col-sm-10">
       <div class="form-group px-4 py-2"">
-        <label for=" masterNodes">Master Nodes:</label>
-        <input type="text" class="form-control" id="masterNodes" name="masterNodes">
+        <label for=" masterNodes">Master Nodes</label>
+        <input type="number" min="0" class="form-control" id="masterNodes" name="masterNodes">
       </div>
       <div class="form-group px-4 py-2"">
-        <label for=" executorNodes">Executor Nodes:</label>
-        <input type="text" class="form-control" id="executorNodes" name="executorNodes">
+        <label for=" executorNodes">Executor Nodes</label>
+        <input type="number" min="0" class="form-control" id="executorNodes" name="executorNodes">
       </div>
       <div class="form-group px-4 py-2"">
-        <label for=" vCPUs">vCPUs:</label>
-        <input type="text" class="form-control" id="vCPUs" name="vCPUs">
+        <label for=" vCPUs">vCPUs</label>
+        <input type="number" min="0" class="form-control" id="vCPUs" name="vCPUs">
       </div>
       <div class="form-group px-4 py-2"">
-        <label for=" RAM">RAM:</label>
-        <input type="text" class="form-control" id="RAM" name="RAM">
+        <label for=" RAM">RAM</label>
+        <input type="number" min="0" class="form-control" id="RAM" name="RAM">
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary px-4 py-2"">Submit</button>
