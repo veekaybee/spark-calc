@@ -31,10 +31,9 @@
   <!-- Begin page content -->
   <main role="main" class="container">
     <h1 class="mt-5">Spark App Memory Calculator</h1>
-    <p class="lead">Inspired by <a
+    <p class="col-sm-10 lead bg-light text-dark">Inspired by <a
         href="https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/">this
-        post</a></p>
-    <p>Correctly setting provisioning the memory </p>
+        post on how to tune memory for Spark</a>, now in an interactive format.</p>
     <form class="form-inline">
       <div class="form-group">
         <div class="col-sm-10">
@@ -54,7 +53,7 @@
     </form>
     <br>
     <div class="container">
-      <div class="jumbotron mt-3">
+      <div class="col-sm-10 bg-light text-dark">
         <h2>Your <a href="https://spark.apache.org/docs/latest/configuration.html">Spark Application
             Properties</a></h2>
         <pre><code><span id="result"></span>
@@ -68,16 +67,11 @@
           <span id="executorInstances"></span></code><pre>
       </div>
     </div>
-
-    
-
-
-  
   </main>
 
   <footer class="footer">
     <div class="container">
-      <span class="text-muted">Not affiliated with Spark/AWS. Made by <a href="https://www.vickiboykis.com">Vicki
+      <span class="text-muted">Not affiliated with Spark or AWS. Made by <a href="https://www.vickiboykis.com">Vicki
           Boykis</a></span>
     </div>
   </footer>
