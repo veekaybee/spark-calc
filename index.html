@@ -22,7 +22,6 @@
   <!-- Custom styles for this template -->
   <link href="sticky-footer.css" rel="stylesheet">
 
-  <script src="script.js"></script>
 
 </head>
 
@@ -31,50 +30,101 @@
   <!-- Begin page content -->
   <main role="main" class="container">
     <h1 class="mt-5">Spark App Memory Calculator</h1>
-    <p class="col-sm-10 lead bg-light text-dark">Inspired by <a
+    <p class="col-sm-10 lead bg-light text-dark">From <a
         href="https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/">this
         post on how to tune memory for Spark</a>, now in an interactive format.</p>
-    <form class="form-inline">
+    <form id="myForm" class="form-inline col-sm-10">
+      <div class="form-group px-4 py-2"">
+        <label for=" masterNodes">Master Nodes:</label>
+        <input type="text" class="form-control" id="masterNodes" name="masterNodes">
+      </div>
+      <div class="form-group px-4 py-2"">
+        <label for=" executorNodes">Executor Nodes:</label>
+        <input type="text" class="form-control" id="executorNodes" name="executorNodes">
+      </div>
+      <div class="form-group px-4 py-2"">
+        <label for=" vCPUs">vCPUs:</label>
+        <input type="text" class="form-control" id="vCPUs" name="vCPUs">
+      </div>
+      <div class="form-group px-4 py-2"">
+        <label for=" RAM">RAM:</label>
+        <input type="text" class="form-control" id="RAM" name="RAM">
+      </div>
       <div class="form-group">
-        <div class="col-sm-10">
-          Total Master Nodes <input type="text" class="form-control" id="masterNodes" /><br>
-          Total Executor Notes <input type="text" class="form-control" id="executorNodes" /><br>
-          vCPUs Per Node <input type="text" class="form-control" id="vCPUs" /><br>
-          RAM Per Node<input type="text" class="form-control" id="RAM" /><br>
-        </div>
-
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary" onclick="tuneSpark()">Calculate</button>
-            <br>
-
-
-          </div>
+        <button type="submit" class="btn btn-primary px-4 py-2"">Submit</button>
+      </div>
+      </div>
     </form>
     <br>
-    <div class="container">
-      <div class="col-sm-10 bg-light text-dark">
-        <h2>Your <a href="https://spark.apache.org/docs/latest/configuration.html">Spark Application
-            Properties</a></h2>
-        <pre><code><span id="result"></span>
-          <span id="result"> </span>
-          <span id="cores"></span>
-          <span id="memory"></span>
-          <span id="executorsMemory"></span>
-          <span id="driverMemory"></span>
-          <span id="memoryOverhead"></span>
-          <span id="driverCores"></span>
-          <span id="executorInstances"></span></code><pre>
+
+    <div class=" col-sm-10 bg-light text-dark">
+          <h2>Your <a href="https://spark.apache.org/docs/latest/configuration.html">Spark
+              Properties</a></h2>
+          <div id="executorNodes"></div>
+          <div id="cores"></div>
+          <div id="memory"></div>
+          <div id="executorsMemory"></div>
+          <div id="memoryOverhead"></div>
+          <div id="driverMemory"></div>
+          <div id="driverCores"></div>
+          <div id="executorInstances"></div>
+          <div id="defaultParallelism"></div>
       </div>
-    </div>
+
+      <script>
+        function tuneSpark() {
+          var masterNodes = document.getElementById("masterNodes").value;
+          var executorNodes = document.getElementById("executorNodes").value;
+          var vCPUs = document.getElementById("vCPUs").value;
+          var ram = document.getElementById("RAM").value;
+
+          //spark.executor.cores
+          var cores = 5;
+
+          //spark.executor.memory
+          //(vCPUs - 1)/ spark.executors.cores
+          // Rounded down
+          var executorsperInstance = Math.floor((vCPUs - 1) / cores);
+
+          var totalExecutorMemory = Math.floor(ram / executorsperInstance);
+
+          var sparkExecutorsMemory = Math.floor(totalExecutorMemory * .90);
+          var memoryOverhead = Math.ceil(totalExecutorMemory * .10);
+
+          var executorInstances = (executorsperInstance * executorNodes) - 1
+          var defaultParallelism = executorInstances * cores * 2;
+
+          document.getElementById("executorNodes").innerHTML = "executor nodes" + executorNodes;
+          document.getElementById("cores").innerHTML = "spark.executor.cores:" + cores;
+          document.getElementById("memory").innerHTML = "spark.executor.memory:" + executorsperInstance;
+          document.getElementById("executorsMemory").innerHTML = "spark.executors.memory:" + sparkExecutorsMemory;
+          document.getElementById("memoryOverhead").innerHTML = "spark.yarn.executor.memoryOverhead:" + memoryOverhead;
+          //Equal to spark.executors.memory
+          document.getElementById("driverMemory").innerHTML = "spark.driver.memory:" + sparkExecutorsMemory;
+          //Equal to executor cores
+          document.getElementById("driverCores").innerHTML = "spark.driver.cores:" + cores;
+          document.getElementById("executorInstances").innerHTML = "spark.executor.instances:" + cores;
+          document.getElementById("defaultParallelism").innerHTML = "spark.default.parallelism:" + defaultParallelism;
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+          document.getElementById("myForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevents form submission
+
+            tuneSpark();
+          });
+        });
+      </script>
+
   </main>
 
-  <footer class="footer">
+  <footer class="mt-2 footer">
     <div class="container">
       <span class="text-muted">Not affiliated with Spark or AWS. Made by <a href="https://www.vickiboykis.com">Vicki
           Boykis</a></span>
     </div>
   </footer>
+
 </body>
 
 </html>
